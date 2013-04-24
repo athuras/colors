@@ -1,2 +1,10 @@
 My experiments with Python Image Processing (NumPy).
-Coming Soon ...
+
+This little collection of code illustrates (get it?) png images with minimal color error.
+This is fundamentally different from both reducing the color-depth (channel bit values), or remapping existing images with hardcoded color-maps (i.e. 256, 512, etc. colors). The aesthetic qualities of these rendering are quite novel.
+
+How it works:
+Images are collections of color (incl. alpha) channel values. Each pixel can be said to describe a color.
+The algorithm places these colors a common space, and finds optimal (sort of) prototype colors based on a naive error scheme. Thus a picture with a lot of shades of green (both by area-in-the-image and variety), is likely to exhibit higher green-fidelity within the green regions, at the expense of dimished color fidelity in less uniform areas.
+
+Enjoy!
