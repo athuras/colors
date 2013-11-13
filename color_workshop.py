@@ -3,6 +3,7 @@
 import classifiers.fst as fst
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from skimage.color import rgb2hsv, hsv2rgb
 import numpy as np
 
 def main():
@@ -17,7 +18,8 @@ def train(img_dir, MAX_COLORS=32, MAX_ITER=500, sample=None):
 
     Returns a KMeans object with k=MAX_COLORS
     '''
-    img = mpimg.imread(img_dir)
+    im = mpimg.imread(img_dir)
+    img = rgb2hsv(im[...,:3])
     s = img.shape
     data = img.reshape((s[0] * s[1], s[2]))
     if sample is not None:
@@ -32,14 +34,14 @@ def train(img_dir, MAX_COLORS=32, MAX_ITER=500, sample=None):
 def classify_and_show(km, img_dir):
     '''Use a km object to display both the original and altered version of the image at
     img_dir, must be PNG'''
-    img = mpimg.imread(img_dir)
+    img = rgb2hsv(mpimg.imread(img_dir)[...,:3])
     s = img.shape
     data = img.reshape((s[0] * s[1], s[2]))
     labels = km.classify(data)
 
-    plt.imshow(img)
+    plt.imshow(hsv2rgb(img))
     plt.figure()
-    plt.imshow(km.means[labels].reshape(s))
+    plt.imshow(hsv2rgb(km.means[labels].reshape(s)))
 
 
 if __name__ == '__main__':
